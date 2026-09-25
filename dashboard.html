@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard | Campus Lost & Found</title>
+
+    <!-- Bootstrap -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <!-- Bootstrap Icons -->
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    >
+
+    <!-- Custom CSS -->
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+
+</head>
+
+
+<body>
+
+
+<!-- ================= NAVBAR ================= -->
+
+<nav class="navbar navbar-expand-lg navbar-dark">
+
+    <div class="container">
+
+        <!-- Logo / Brand -->
+
+        <a class="navbar-brand d-flex align-items-center" href="/dashboard">
+
+            <span
+                class="bg-white text-primary rounded-circle d-flex align-items-center justify-content-center me-2"
+                style="width:42px;height:42px;"
+            >
+                <i class="bi bi-search-heart-fill"></i>
+            </span>
+
+            <span>
+                Campus Lost & Found
+            </span>
+
+        </a>
+
+
+        <!-- Mobile Menu Button -->
+
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarMenu"
+        >
+
+            <span class="navbar-toggler-icon"></span>
+
+        </button>
+
+
+        <!-- Navigation -->
+
+        <div class="collapse navbar-collapse" id="navbarMenu">
+
+            <ul class="navbar-nav ms-auto align-items-lg-center">
+
+                <li class="nav-item">
+                    <a class="nav-link active" href="/dashboard">
+                        <i class="bi bi-grid-1x2-fill me-1"></i>
+                        Dashboard
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/items">
+                        <i class="bi bi-box-seam me-1"></i>
+                        Items
+                    </a>
+                </li>
+
+                <li class="nav-item ms-lg-3 mt-2 mt-lg-0">
+
+                    <span class="text-white small">
+                        <i class="bi bi-person-circle me-1"></i>
+                        {{ session["user"] }}
+                    </span>
+
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+<!-- ================= MAIN CONTENT ================= -->
+
+<div class="container py-4">
+
+
+    <!-- ================= WELCOME SECTION ================= -->
+
+    <div class="row align-items-center mb-4">
+
+        <div class="col-md-8">
+
+            <p class="text-primary fw-semibold mb-1">
+                CAMPUS LOST & FOUND SYSTEM
+            </p>
+
+            <h1 class="fw-bold mb-2">
+                Welcome back, {{ session["user"] }} 👋
+            </h1>
+
+            <p class="text-muted mb-0">
+                Manage lost and found items across your campus from one place.
+            </p>
+
+        </div>
+
+
+        <div class="col-md-4 text-md-end mt-3 mt-md-0">
+
+            <a
+                href="/report/lost"
+                class="btn btn-danger me-2"
+            >
+                <i class="bi bi-exclamation-circle me-1"></i>
+                Report Lost
+            </a>
+
+            <a
+                href="/report/found"
+                class="btn btn-success"
+            >
+                <i class="bi bi-check-circle me-1"></i>
+                Report Found
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= STATISTICS ================= -->
+
+    <div class="row g-4">
+
+
+        <!-- TOTAL ITEMS -->
+
+        <div class="col-sm-6 col-lg-3">
+
+            <div class="stat blue h-100">
+
+                <div class="d-flex justify-content-between align-items-start">
+
+                    <div>
+
+                        <p class="mb-2">
+                            Total Items
+                        </p>
+
+                        <h3>
+                            {{ total }}
+                        </h3>
+
+                        <small>
+                            All reported items
+                        </small>
+
+                    </div>
+
+                    <div
+                        class="bg-white bg-opacity-25 rounded-circle d-flex align-items-center justify-content-center"
+                        style="width:50px;height:50px;"
+                    >
+
+                        <i class="bi bi-box-seam fs-4"></i>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- LOST ITEMS -->
+
+        <div class="col-sm-6 col-lg-3">
+
+            <div class="stat red h-100">
+
+                <div class="d-flex justify-content-between align-items-start">
+
+                    <div>
+
+                        <p class="mb-2">
+                            Lost Items
+                        </p>
+
+                        <h3>
+                            {{ lost }}
+                        </h3>
+
+                        <small>
+                            Items reported lost
+                        </small>
+
+                    </div>
+
+                    <div
+                        class="bg-white bg-opacity-25 rounded-circle d-flex align-items-center justify-content-center"
+                        style="width:50px;height:50px;"
+                    >
+
+                        <i class="bi bi-search fs-4"></i>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- FOUND ITEMS -->
+
+        <div class="col-sm-6 col-lg-3">
+
+            <div class="stat green h-100">
+
+                <div class="d-flex justify-content-between align-items-start">
+
+                    <div>
+
+                        <p class="mb-2">
+                            Found Items
+                        </p>
+
+                        <h3>
+                            {{ found }}
+                        </h3>
+
+                        <small>
+                            Items successfully found
+                        </small>
+
+                    </div>
+
+                    <div
+                        class="bg-white bg-opacity-25 rounded-circle d-flex align-items-center justify-content-center"
+                        style="width:50px;height:50px;"
+                    >
+
+                        <i class="bi bi-check2-circle fs-4"></i>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- CLAIMS -->
+
+        <div class="col-sm-6 col-lg-3">
+
+            <div class="stat purple h-100">
+
+                <div class="d-flex justify-content-between align-items-start">
+
+                    <div>
+
+                        <p class="mb-2">
+                            Claimed Items
+                        </p>
+
+                        <h3>
+                            {{ claims }}
+                        </h3>
+
+                        <small>
+                            Successfully claimed
+                        </small>
+
+                    </div>
+
+                    <div
+                        class="bg-white bg-opacity-25 rounded-circle d-flex align-items-center justify-content-center"
+                        style="width:50px;height:50px;"
+                    >
+
+                        <i class="bi bi-person-check-fill fs-4"></i>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= QUICK ACTIONS ================= -->
+
+    <div class="card mt-4 p-4">
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+
+            <div>
+
+                <h4 class="fw-bold mb-1">
+                    Quick Actions
+                </h4>
+
+                <p class="text-muted mb-0">
+                    Choose an action to manage campus items.
+                </p>
+
+            </div>
+
+            <i class="bi bi-lightning-charge-fill text-warning fs-3"></i>
+
+        </div>
+
+
+        <div class="row g-3">
+
+
+            <!-- REPORT LOST -->
+
+            <div class="col-md-4">
+
+                <a
+                    href="/report/lost"
+                    class="text-decoration-none"
+                >
+
+                    <div
+                        class="border rounded-4 p-4 h-100"
+                        style="transition:0.3s;"
+                    >
+
+                        <div
+                            class="bg-danger bg-opacity-10 text-danger rounded-circle d-flex align-items-center justify-content-center mb-3"
+                            style="width:55px;height:55px;"
+                        >
+
+                            <i class="bi bi-exclamation-triangle-fill fs-4"></i>
+
+                        </div>
+
+                        <h5 class="fw-bold text-dark">
+                            Report Lost Item
+                        </h5>
+
+                        <p class="text-muted mb-0">
+                            Report an item that you have lost on campus.
+                        </p>
+
+                    </div>
+
+                </a>
+
+            </div>
+
+
+            <!-- REPORT FOUND -->
+
+            <div class="col-md-4">
+
+                <a
+                    href="/report/found"
+                    class="text-decoration-none"
+                >
+
+                    <div
+                        class="border rounded-4 p-4 h-100"
+                        style="transition:0.3s;"
+                    >
+
+                        <div
+                            class="bg-success bg-opacity-10 text-success rounded-circle d-flex align-items-center justify-content-center mb-3"
+                            style="width:55px;height:55px;"
+                        >
+
+                            <i class="bi bi-hand-thumbs-up-fill fs-4"></i>
+
+                        </div>
+
+                        <h5 class="fw-bold text-dark">
+                            Report Found Item
+                        </h5>
+
+                        <p class="text-muted mb-0">
+                            Help someone find their missing belongings.
+                        </p>
+
+                    </div>
+
+                </a>
+
+            </div>
+
+
+            <!-- VIEW ITEMS -->
+
+            <div class="col-md-4">
+
+                <a
+                    href="/items"
+                    class="text-decoration-none"
+                >
+
+                    <div
+                        class="border rounded-4 p-4 h-100"
+                        style="transition:0.3s;"
+                    >
+
+                        <div
+                            class="bg-primary bg-opacity-10 text-primary rounded-circle d-flex align-items-center justify-content-center mb-3"
+                            style="width:55px;height:55px;"
+                        >
+
+                            <i class="bi bi-grid-fill fs-4"></i>
+
+                        </div>
+
+                        <h5 class="fw-bold text-dark">
+                            Browse Items
+                        </h5>
+
+                        <p class="text-muted mb-0">
+                            Search and view all lost and found items.
+                        </p>
+
+                    </div>
+
+                </a>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= INFORMATION SECTION ================= -->
+
+    <div class="row g-4 mt-1">
+
+
+        <!-- HOW IT WORKS -->
+
+        <div class="col-lg-8">
+
+            <div class="card p-4 h-100">
+
+                <div class="d-flex align-items-center mb-4">
+
+                    <div
+                        class="bg-primary bg-opacity-10 text-primary rounded-circle d-flex align-items-center justify-content-center me-3"
+                        style="width:50px;height:50px;"
+                    >
+
+                        <i class="bi bi-info-circle-fill fs-4"></i>
+
+                    </div>
+
+                    <div>
+
+                        <h5 class="fw-bold mb-1">
+                            How Campus Lost & Found Works
+                        </h5>
+
+                        <p class="text-muted mb-0">
+                            A simple process for recovering lost belongings.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="row g-4">
+
+
+                    <div class="col-md-4 text-center">
+
+                        <div
+                            class="bg-primary text-white rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center"
+                            style="width:45px;height:45px;"
+                        >
+                            1
+                        </div>
+
+                        <h6 class="fw-bold">
+                            Report
+                        </h6>
+
+                        <p class="small text-muted mb-0">
+                            Report a lost or found item with its details.
+                        </p>
+
+                    </div>
+
+
+                    <div class="col-md-4 text-center">
+
+                        <div
+                            class="bg-primary text-white rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center"
+                            style="width:45px;height:45px;"
+                        >
+                            2
+                        </div>
+
+                        <h6 class="fw-bold">
+                            Search
+                        </h6>
+
+                        <p class="small text-muted mb-0">
+                            Browse the available items and find a match.
+                        </p>
+
+                    </div>
+
+
+                    <div class="col-md-4 text-center">
+
+                        <div
+                            class="bg-primary text-white rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center"
+                            style="width:45px;height:45px;"
+                        >
+                            3
+                        </div>
+
+                        <h6 class="fw-bold">
+                            Claim
+                        </h6>
+
+                        <p class="small text-muted mb-0">
+                            Claim your belongings when you find a match.
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- SYSTEM STATUS -->
+
+        <div class="col-lg-4">
+
+            <div class="card p-4 h-100">
+
+                <h5 class="fw-bold mb-4">
+                    <i class="bi bi-shield-check text-success me-2"></i>
+                    System Status
+                </h5>
+
+
+                <div class="d-flex justify-content-between align-items-center mb-3">
+
+                    <span class="text-muted">
+                        Platform
+                    </span>
+
+                    <span class="badge bg-success">
+                        Online
+                    </span>
+
+                </div>
+
+
+                <div class="d-flex justify-content-between align-items-center mb-3">
+
+                    <span class="text-muted">
+                        Database
+                    </span>
+
+                    <span class="badge bg-success">
+                        Connected
+                    </span>
+
+                </div>
+
+
+                <div class="d-flex justify-content-between align-items-center mb-3">
+
+                    <span class="text-muted">
+                        Items
+                    </span>
+
+                    <span class="badge bg-primary">
+                        {{ total }}
+                    </span>
+
+                </div>
+
+
+                <hr>
+
+
+                <p class="small text-muted mb-0">
+                    <i class="bi bi-lock-fill me-1"></i>
+                    Your campus lost and found information is managed securely.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer class="text-center py-4 mt-3">
+
+    <p class="text-muted small mb-0">
+
+        © 2026 Campus Lost & Found System
+
+        <span class="mx-2">•</span>
+
+        Campus Management Portal
+
+    </p>
+
+</footer>
+
+
+<!-- Bootstrap JavaScript -->
+
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+></script>
+
+
+</body>
+
+</html>

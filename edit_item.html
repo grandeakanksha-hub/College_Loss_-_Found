@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Item</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body class="bg-light">
+
+<nav class="navbar navbar-dark bg-primary">
+    <div class="container">
+        <span class="navbar-brand fw-bold">Campus Lost & Found</span>
+
+        <a href="/items" class="btn btn-light btn-sm">
+            Back
+        </a>
+    </div>
+</nav>
+
+<div class="container mt-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-7">
+
+            <div class="card shadow p-4">
+
+                <h3 class="text-center text-primary mb-4">
+                    Edit Item Details
+                </h3>
+
+                <form method="POST">
+
+                    <div class="mb-3">
+                        <label class="form-label">Item Title</label>
+                        <input
+                            type="text"
+                            name="title"
+                            class="form-control"
+                            value="{{ item.title }}"
+                            required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Category</label>
+                        <input
+                            type="text"
+                            name="category"
+                            class="form-control"
+                            value="{{ item.category }}"
+                            required>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label">Status</label>
+
+                        <select name="status" class="form-select">
+
+                            <option value="Open"
+                                {% if item.status=="Open" %}selected{% endif %}>
+                                Open
+                            </option>
+
+                            <option value="Found"
+                                {% if item.status=="Found" %}selected{% endif %}>
+                                Found
+                            </option>
+
+                            <option value="Claimed"
+                                {% if item.status=="Claimed" %}selected{% endif %}>
+                                Claimed
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <button class="btn btn-success w-100">
+                        Update Item
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
